@@ -1,9 +1,9 @@
 package br.com.serratec.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,41 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.serratec.entity.Time;
-import br.com.serratec.repository.TimeRepository;
+import br.com.serratec.entity.Atleta;
+import br.com.serratec.repository.AtletaRepository;
 
 @RestController
-@RequestMapping("/times")
-public class TimeController {
+@RequestMapping("/atleta")
+public class AtletaController {
 
 	@Autowired
-	private TimeRepository repository;
-	
-	@GetMapping
-	public List<Time> buscar(){
-		return repository.findAll();
-	}
+	private AtletaRepository repository;
 	
 	@PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Time inserir(@RequestBody Time time) {
-        return repository.save(time);
-    }
+	public Atleta inseir(@RequestBody Atleta atleta) {
+		return repository.save(atleta);
+	}
 	
 	@PutMapping
-	public ResponseEntity<Time> atualizar (@PathVariable Long id, @RequestBody Time time){
+	public ResponseEntity<Atleta> atualizar (@PathVariable Long id, @RequestBody Atleta atleta){
 		if(repository.existsById(id)) {
-			time.setId(id);
-			return ResponseEntity.ok(repository.save(time));
+			atleta.setId(id);
+			return ResponseEntity.ok(repository.save(atleta));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity<Time> deletar(@PathVariable Long id){
+	public ResponseEntity<Atleta> deletar(@PathVariable Long id){
 		if(repository.existsById(id)) {
 			repository.deleteById(id);
 			return ResponseEntity.notFound().build();
@@ -55,10 +48,19 @@ public class TimeController {
 	}
 	
 	@PostMapping("/saveAll")
-    public ResponseEntity<List<Time>> saveAll(@RequestBody List<Time> time){
-        return ResponseEntity.ok(repository.saveAll(time));
+    public ResponseEntity<List<Atleta>> saveAll(@RequestBody List<Atleta> atleta){
+        return ResponseEntity.ok(repository.saveAll(atleta));
     }
 	
-	
+	@GetMapping("{id}")
+	public ResponseEntity<Atleta> buscar(@PathVariable Long id) {
+		Optional<Atleta> atleta = repository.findById(id);
+		if(atleta.isPresent()){
+			return ResponseEntity.ok(atleta.get());
+		}
+		else {
+			return ResponseEntity.notFound().build();	
+		}
+	}
 }
 

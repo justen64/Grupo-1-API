@@ -1,5 +1,9 @@
 package br.com.serratec.repository;
 
-public interface TimeRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.serratec.entity.Time;
+
+public interface TimeRepository extends JpaRepository<Time, Long>{
 
 }

@@ -1,11 +1,15 @@
 package br.com.serratec.entity;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Time {
@@ -17,7 +21,19 @@ public class Time {
 	private LocalDate dataCriacao;
 	private String UF;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "time")
+    private List<Atleta> atleta;
 	
+	
+	
+	
+	public List<Atleta> getAtleta() {
+		return atleta;
+	}
+	public void setAtleta(List<Atleta> atleta) {
+		this.atleta = atleta;
+	}
 	public Long getId() {
 		return id;
 	}
