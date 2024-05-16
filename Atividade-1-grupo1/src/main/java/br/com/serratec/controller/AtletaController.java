@@ -29,7 +29,7 @@ public class AtletaController {
 		return repository.save(atleta);
 	}
 	
-	@PutMapping
+	@PutMapping("{id}")
 	public ResponseEntity<Atleta> atualizar (@PathVariable Long id, @RequestBody Atleta atleta){
 		if(repository.existsById(id)) {
 			atleta.setId(id);
