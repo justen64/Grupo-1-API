@@ -9,6 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Vendedor {
@@ -16,14 +19,21 @@ public class Vendedor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigoVendedor;
+	
+	@NotBlank(message = "Nome vazio ou nulo!")
 	private String nome;
+	
+	@Email
 	private String email;
+	
+	@DecimalMin(value = "1412", message = "Valor inferior ao salário minímo")
 	private BigDecimal salario;
 	private BigDecimal comissao;
 	
-	
 	@OneToMany(mappedBy = "vendedor")
 	private List<LancamentoVendas> vendas = new ArrayList<>();
+	
+	
 	
 	
 	
