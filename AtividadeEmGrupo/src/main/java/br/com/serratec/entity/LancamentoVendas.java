@@ -3,6 +3,8 @@ package br.com.serratec.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,14 +18,20 @@ public class LancamentoVendas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigoVenda;
-	private LocalDateTime dataVenda;
+	private LocalDateTime dataVenda = LocalDateTime.now();
 	private BigDecimal valorVenda;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "codigoVendedor")
 	private Vendedor vendedor;
 
 	
+
+	public void setCodigoVenda(Long codigoVenda) {
+		this.codigoVenda = codigoVenda;
+	}
+
 
 	public Long getCodigoVenda() {
 		return codigoVenda;

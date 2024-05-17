@@ -1,19 +1,18 @@
 package br.com.serratec.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.serratec.dto.LancamentoVendasMostrarDTO;
 import br.com.serratec.entity.LancamentoVendas;
 import br.com.serratec.exception.ResourceNotFoundException;
-import br.com.serratec.exception.VendasException;
 import br.com.serratec.repository.LancamentoRepository;
+import jakarta.validation.Valid;
 
 @Service
 public class LancamentoVendasService {
@@ -22,14 +21,12 @@ public class LancamentoVendasService {
 	private LancamentoRepository repository;
 	
 	public LancamentoVendasMostrarDTO buscarPorID(Long id) {
-		
-	}
+        LancamentoVendas lv = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("lancamento não encontrado!"));
+        return new LancamentoVendasMostrarDTO(lv.getDataVenda(), lv.getValorVenda(),lv.getVendedor().getNome());
+    }
 	
-	public LancamentoVendas inserir(LancamentoVendas lv){
-        if (repository.findByDataVenda(lv.getDataVenda()) != null|repository.findByNome(lv.getVendedor().getNome()) != null ) {
-            throw new VendasException();
-        }
-        return repository.save(lv);
+	public LancamentoVendas inserirLancamento(@RequestBody LancamentoVendas venda) {
+		return repository.save(venda);
 	}
 	
 	public List<LancamentoVendasMostrarDTO> listar(){
@@ -45,5 +42,8 @@ public class LancamentoVendasService {
 		return ResponseEntity.notFound().build();
 	}
 	
-//	public List<VendedorResponseDTO>
+	public LancamentoVendasMostrarDTO alterarLancamento(LancamentoVendas lv){
+        repository.save(lv);
+        return new LancamentoVendasMostrarDTO(lv.getDataVenda(), lv.getValorVenda(), lv.getVendedor().getNome());
+    }
 }

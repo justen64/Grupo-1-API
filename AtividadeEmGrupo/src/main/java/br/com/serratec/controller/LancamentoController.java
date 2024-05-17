@@ -1,6 +1,5 @@
 package br.com.serratec.controller;
 
-import java.security.Provider.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.serratec.dto.LancamentoVendasMostrarDTO;
 import br.com.serratec.entity.LancamentoVendas;
 import br.com.serratec.service.LancamentoVendasService;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/vendedores")
+@RequestMapping("/lancamentoVendas")
 public class LancamentoController {
-
+	
 	@Autowired
 	private LancamentoVendasService service;
 	
@@ -34,30 +34,22 @@ public class LancamentoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public LancamentoVendas inserirLancamento(@RequestBody LancamentoVendas venda) {
-		return repository.save(venda);
+	public ResponseEntity<LancamentoVendas> inserirLancamento(@RequestBody LancamentoVendas venda) {
+		return ResponseEntity.ok(service.inserirLancamento(venda));
 	}
 	
 	@GetMapping
-	public List<LancamentoVendas> listar() {
-		return repository.findAll();
+	public ResponseEntity<List<LancamentoVendasMostrarDTO>> listar() {
+		return ResponseEntity.ok(service.listar());
 	}
 	
 	@DeleteMapping("{Id}")
-	public ResponseEntity<Void> deletar(@PathVariable Long Id) {
-		if(repository.existsById(Id)) {
-			repository.deleteById(Id);
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
+	public ResponseEntity<ResponseEntity<Void>> deletar(@PathVariable Long Id) {
+		return ResponseEntity.ok(service.deletar(Id));
 	}
 	
 	@PutMapping("{Id}")
-	public ResponseEntity<LancamentoVendas> Alterar(@PathVariable Long Id, @RequestBody LancamentoVendas vendas) {
-		if(repository.existsById(Id)) {
-			return ResponseEntity.ok(repository.save(vendas));
-		}
-		return ResponseEntity.notFound().build();
-	}
-	
+    public ResponseEntity<LancamentoVendasMostrarDTO> Alterar(@PathVariable Long Id, @RequestBody LancamentoVendas vendas) {
+        return ResponseEntity.ok(service.alterarLancamento(vendas));
+    }
 }
