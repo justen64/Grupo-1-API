@@ -29,7 +29,7 @@ public class LancamentoController {
 	
 	@GetMapping("{id}")
 	public ResponseEntity<LancamentoVendasMostrarDTO> listarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(service.buscar(id));
+		return ResponseEntity.ok(service.buscarPorID(id));
 	}
 	
 	@PostMapping
