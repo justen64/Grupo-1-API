@@ -34,7 +34,7 @@ public class LancamentoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<LancamentoVendas> inserirLancamento(@RequestBody LancamentoVendas venda) {
+	public ResponseEntity<LancamentoVendas> inserirLancamento(@Valid @RequestBody LancamentoVendas venda) {
 		return ResponseEntity.ok(service.inserirLancamento(venda));
 	}
 	
@@ -43,13 +43,14 @@ public class LancamentoController {
 		return ResponseEntity.ok(service.listar());
 	}
 	
-	@DeleteMapping("{Id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<ResponseEntity<Void>> deletar(@PathVariable Long Id) {
-		return ResponseEntity.ok(service.deletar(Id));
+		service.deletar(Id);
+		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("{Id}")
-    public ResponseEntity<LancamentoVendasMostrarDTO> Alterar(@PathVariable Long Id, @RequestBody LancamentoVendas vendas) {
-        return ResponseEntity.ok(service.alterarLancamento(vendas));
+	@PutMapping("{id}")
+    public ResponseEntity<LancamentoVendasMostrarDTO> Alterar(@PathVariable Long id,@Valid @RequestBody LancamentoVendas vendas) {
+        return ResponseEntity.ok(service.alterarLancamento(id, vendas));
     }
 }

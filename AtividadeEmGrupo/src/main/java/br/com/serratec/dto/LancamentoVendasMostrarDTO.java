@@ -1,25 +1,25 @@
 package br.com.serratec.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class LancamentoVendasMostrarDTO {
 
-	private LocalDateTime dataVenda;
+	private LocalDate dataVenda;
 	private BigDecimal valorVenda;
 	private String nome;
 	
-	public LancamentoVendasMostrarDTO(LocalDateTime dataVenda, BigDecimal valorVenda, String nome) {
+	public LancamentoVendasMostrarDTO(LocalDate dataVenda, BigDecimal valorVenda, String nome) {
 		super();
 		this.dataVenda = dataVenda;
 		this.valorVenda = valorVenda;
 		this.nome = nome;
 	}
 		
-	public LocalDateTime getDataVenda() {
+	public LocalDate getDataVenda() {
 		return dataVenda;
 	}
-	public void setDataVenda(LocalDateTime dataVenda) {
+	public void setDataVenda(LocalDate dataVenda) {
 		this.dataVenda = dataVenda;
 	}
 	public BigDecimal getValorVenda() {

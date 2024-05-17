@@ -1,7 +1,7 @@
 package br.com.serratec.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,7 +18,7 @@ public class LancamentoVendas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigoVenda;
-	private LocalDateTime dataVenda = LocalDateTime.now();
+	private LocalDate dataVenda;
 	private BigDecimal valorVenda;
 	
 	@JsonBackReference
@@ -38,12 +38,12 @@ public class LancamentoVendas {
 	}
 
 
-	public LocalDateTime getDataVenda() {
+	public LocalDate getDataVenda() {
 		return dataVenda;
 	}
 
 
-	public void setDataVenda(LocalDateTime dataVenda) {
+	public void setDataVenda(LocalDate dataVenda) {
 		this.dataVenda = dataVenda;
 	}
 

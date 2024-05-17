@@ -36,14 +36,15 @@ public class LancamentoVendasService {
                 lancamento.getVendedor().getNome())).collect(Collectors.toList());
 	}
 	
-	public ResponseEntity<Void> deletar(Long id) {
+	public void deletar(Long id) {
 		repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("lancamento não encontrado!"));
 		repository.deleteById(id);
-		return ResponseEntity.notFound().build();
 	}
 	
-	public LancamentoVendasMostrarDTO alterarLancamento(LancamentoVendas lv){
-        repository.save(lv);
+	public LancamentoVendasMostrarDTO alterarLancamento(Long id, LancamentoVendas lv){
+		LancamentoVendas venda = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
+        lv.setCodigoVenda(id);
+		repository.save(lv);
         return new LancamentoVendasMostrarDTO(lv.getDataVenda(), lv.getValorVenda(), lv.getVendedor().getNome());
     }
 }
