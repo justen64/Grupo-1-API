@@ -1,36 +1,25 @@
-package br.com.rocketStore.entity;
+package br.com.rocketStore.DTO;
 
-import org.hibernate.validator.constraints.br.CPF;
+import br.com.rocketStore.entity.Cliente;
+import br.com.rocketStore.entity.Endereco;
+import br.com.rocketStore.entity.Telefone;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
+public class ClienteResponseDTO {
 
-@Entity
-public class Cliente {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
 	private String nome;
-	//perguntar ao professor sobre a verificação de telefone.
 	private Telefone telefone;
-	@Email
 	private String email;
-	@CPF
 	private String CPF;
 	private Endereco endereco;
-	private String senha;
 	
+	public ClienteResponseDTO(Cliente cliente) {
+		nome = cliente.getNome();
+		telefone = cliente.getTelefone();
+		email = cliente.getEmail();
+		CPF = cliente.getCPF();
+		endereco = cliente.getEndereco();
+	}
 	
-	public Long getId() {
-		return Id;
-	}
-	public void setId(Long id) {
-		Id = id;
-	}
 	public String getNome() {
 		return nome;
 	}
@@ -61,15 +50,6 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	} 
-	
-	
-	
 	
 	
 }
