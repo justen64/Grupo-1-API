@@ -1,27 +1,53 @@
 package br.com.rocketStore.DTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.rocketStore.entity.Cliente;
+import br.com.rocketStore.entity.Endereco;
 
 public class ClienteRequestDTO {
 	private String nome;
+	private List<String> telefones = new ArrayList<>();
 	private String email;
+	private String CPF;
+	private List<Endereco> enderecos = new ArrayList<>();
 	private String senha;
 	private String confirmaSenha;
-
-	public ClienteRequestDTO() {
-	}
-
+	
+	
 	public ClienteRequestDTO(Cliente cliente) {
 		nome = cliente.getNome();
+		telefones = cliente.getTelefones();
 		email = cliente.getEmail();
+		CPF = cliente.getCPF();
+		enderecos = cliente.getEnderecos();
 		senha = cliente.getSenha();
 	}
 	
 	
+	public List<String> getTelefones() {
+		return telefones;
+	}
 
-	@Override
-	public String toString() {
-		return "nome: " + nome + "email: " + email + "\n";
+	public void setTelefones(List<String> telefones) {
+		this.telefones = telefones;
+	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
 	public String getNome() {

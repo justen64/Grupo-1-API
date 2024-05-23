@@ -22,6 +22,9 @@ public class ClienteResponseDTO {
 		enderecos = cliente.getEnderecos();
 	}
 
+	public ClienteResponseDTO() {
+	}
+
 	public String getNome() {
 		return nome;
 	}
