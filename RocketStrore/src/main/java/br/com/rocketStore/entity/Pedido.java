@@ -25,8 +25,8 @@ public class Pedido {
 	private StatusENUM status;
 	
 	
-	@OneToMany(mappedBy = "id.produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Pedido_Produto> produtos = new HashSet<>();
+	@OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Pedido_Pokemon> produtos = new HashSet<>();
 	
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente")
@@ -34,10 +34,10 @@ public class Pedido {
 	
 	
 	
-	public Set<Pedido_Produto> getProdutos() {
+	public Set<Pedido_Pokemon> getProdutos() {
 		return produtos;
 	}
-	public void setProdutos(Set<Pedido_Produto> produtos) {
+	public void setProdutos(Set<Pedido_Pokemon> produtos) {
 		this.produtos = produtos;
 	}
 	public Cliente getCliente() {

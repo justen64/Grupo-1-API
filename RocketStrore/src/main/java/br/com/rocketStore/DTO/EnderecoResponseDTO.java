@@ -1,19 +1,9 @@
-package br.com.rocketStore.entity;
+package br.com.rocketStore.DTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import br.com.rocketStore.entity.Endereco;
 
-@Entity
-public class Endereco {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class EnderecoResponseDTO {
+
 	private String cep;
 	private String logradouro;
 	private String complemento;
@@ -21,13 +11,14 @@ public class Endereco {
 	private String uf;
 	private Integer ibge;
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public EnderecoResponseDTO(Endereco endereco) {
+		super();
+		cep = endereco.getCep();
+		logradouro = endereco.getLogradouro();
+		complemento = endereco.getComplemento();
+		localidade = endereco.getLocalidade();
+		uf = endereco.getUf();
+		ibge = endereco.getIbge();
 	}
 
 	public String getCep() {
