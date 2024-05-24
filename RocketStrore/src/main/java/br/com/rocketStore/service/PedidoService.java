@@ -16,6 +16,7 @@ import br.com.rocketStore.DTO.PedidoResponseDTO;
 import br.com.rocketStore.entity.Pedido;
 import br.com.rocketStore.entity.Pedido_Pokemon;
 import br.com.rocketStore.entity.Pokemon;
+import br.com.rocketStore.enuns.StatusENUM;
 import br.com.rocketStore.exception.ResourceNotFoundException;
 import br.com.rocketStore.repository.PedidoRepository;
 import jakarta.transaction.Transactional;
@@ -26,15 +27,14 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository repository;
 	
+	@Autowired
+	private PokemonService pokemonService;
+	
 	public List<PedidoResponseDTO> listar() {
 		List<Pedido> pedidos = repository.findAll();
 		return pedidos.stream().map((c) -> new PedidoResponseDTO(c))
 				.collect(Collectors.toList());
 	}
-	
-	
-	
-	
 	
 	public Page<Pedido> listarPorPagina(Pageable pageable) {
 		return repository.findAll(pageable);
@@ -52,21 +52,33 @@ public class PedidoService {
 		
 		Set<Pedido_Pokemon> pokemons = new HashSet<>();
 		
-		for (Pokemon pokemon : f.get()) {
-			pokemon = PokemonService.buscar(pokemon.getId());
+		for (Pokemon pokemon : pedido.getPokemon()) {
+			pokemon = pokemonService.buscar(pokemon.getId());
 			pokemons.add(new Pedido_Pokemon(f, pokemon, LocalDate.now()));
 		}
 		f.setProdutos(pokemons);
-		repository.save(u);
+		repository.save(f);
 		return new PedidoResponseDTO(f);
-
-
 	}
 	
-	public PedidoResponseDTO alterarPedido(Long id, Pedido cliente){
+	
+	public PedidoResponseDTO alterarStatus(Long id, StatusENUM status){
+		
+	Pedido c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
+	c.setId(id);
+	return new PedidoResponseDTO(c);
+	
+	}
+	
+	public PedidoResponseDTO alterarPedido(Long id, Pedido pedido){
 		Pedido c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
         c.setId(id);
 		repository.save(c);
         return new PedidoResponseDTO(c);
     }
+	
+//	public PedidoResponseDTO totalPedido(Long id, Pedido pedido) {
+//		
+//	}
+	
 }

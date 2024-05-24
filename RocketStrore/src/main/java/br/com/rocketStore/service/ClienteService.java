@@ -14,8 +14,8 @@ import br.com.rocketStore.DTO.ClienteResponseDTO;
 import br.com.rocketStore.entity.Cliente;
 import br.com.rocketStore.exception.ConfirmaSenhaException;
 import br.com.rocketStore.exception.EmailException;
+import br.com.rocketStore.exception.ResourceNotFoundException;
 import br.com.rocketStore.repository.ClienteRepository;
-import br.com.serratec.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -59,7 +59,7 @@ public class ClienteService {
 	}
 	
 	public ClienteResponseDTO alterarCliente(Long id, Cliente cliente){
-		Cliente c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
+		Cliente c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lançamento não encontrado"));
         c.setId(id);
 		repository.save(c);
         return new ClienteResponseDTO(c);
