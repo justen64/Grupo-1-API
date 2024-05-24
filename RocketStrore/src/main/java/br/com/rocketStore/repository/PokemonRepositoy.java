@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.rocketStore.entity.Pokemon;
 
-public interface PokemonRepository extends JpaRepository<Pokemon, Long>{
+public interface PokemonRepositoy extends JpaRepository<Pokemon, Long>{
 
 }

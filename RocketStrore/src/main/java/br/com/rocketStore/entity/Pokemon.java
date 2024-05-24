@@ -1,90 +1,98 @@
 package br.com.rocketStore.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import br.com.rocketStore.enuns.TipoENUM;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
+
 public class Pokemon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	@NotBlank
+	@Column
 	private String nome;
-	private LocalDate dataCadastro;
-	private LocalDate alteradoEm;
-	@NotBlank
-	private Long pokedexId;
-	private String descricao;
-	@NotBlank
-	private Double valor;
-	@NotBlank
-	private TipoENUM tipoPrimario;
-	private TipoENUM tipoSecundario;
+	
+	private Long ordem;
+	
+	@Embedded
+	private Types types;
+	
+	private LocalDateTime dataCadastro;
+
+	private Double valorUnitario;
 	
 	
-	
-	public TipoENUM getTipoPrimario() {
-		return tipoPrimario;
+
+	public Pokemon() {
+		super();
 	}
-	public void setTipoPrimario(TipoENUM tipoPrimario) {
-		this.tipoPrimario = tipoPrimario;
+
+	public Pokemon( String nome, Long ordem, Types types) {
+		super();
+		this.nome = nome;
+		this.ordem = ordem;
+		this.types = types;
+		
+		
 	}
-	public TipoENUM getTipoSecundario() {
-		return tipoSecundario;
-	}
-	public void setTipoSecundario(TipoENUM tipoSecundario) {
-		this.tipoSecundario = tipoSecundario;
-	}
+
 	public Long getId() {
 		return Id;
 	}
+
 	public void setId(Long id) {
 		Id = id;
 	}
+
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public LocalDate getDataCadastro() {
+
+	public Long getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Long ordem) {
+		this.ordem = ordem;
+	}
+
+
+	public Types getTypes() {
+		return types;
+	}
+
+	public void setTypes(Types types) {
+		this.types = types;
+	}
+	
+	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(LocalDate dataCadastro) {
+
+	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	public LocalDate getAlteradoEm() {
-		return alteradoEm;
+
+	public Double getValorUnitario() {
+		return valorUnitario;
 	}
-	public void setAlteradoEm(LocalDate alteradoEm) {
-		this.alteradoEm = alteradoEm;
-	}
-	public Long getPokedexId() {
-		return pokedexId;
-	}
-	public void setPokedexId(Long pokedexId) {
-		this.pokedexId = pokedexId;
-	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public Double getValor() {
-		return valor;
-	}
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
-	
-	
+
+	public void setValorUnitario(Double valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}	
 	
 }
