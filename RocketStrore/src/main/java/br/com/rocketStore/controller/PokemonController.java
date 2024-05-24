@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.rocketStore.DTO.PokemonResponseDTO;
-import br.com.rocketStore.entity.Pokemon;
 import br.com.rocketStore.service.PokemonService;
 
 
@@ -28,7 +26,8 @@ public class PokemonController {
 	}
 
 	@GetMapping()
-	public List<Pokemon> listar() {
-		return service.listarClientes();
+	public List<PokemonResponseDTO> listar() {
+		return service.listarPokemon();
 	}
+	
 }

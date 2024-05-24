@@ -87,9 +87,12 @@ public class PokemonService {
 		return pokemons.stream().map(pok -> new PokemonResponseDTO(pok)).collect(Collectors.toList());
 	}
 
-	public List<Pokemon> listarClientes() {
-		return repository.findAll();
+	public List<PokemonResponseDTO> listarPokemon() {
+		List<Pokemon> pokemon = repository.findAll();
+		return pokemon.stream().map((pok) -> new PokemonResponseDTO(pok)).collect(Collectors.toList());
+               
 	}
+	
 	
 	public Pokemon buscar(Long id) {
 		Pokemon pokemon = repository.findById(id)

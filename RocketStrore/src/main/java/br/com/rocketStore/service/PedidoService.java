@@ -77,8 +77,6 @@ public class PedidoService {
         return new PedidoResponseDTO(c);
     }
 	
-//	public PedidoResponseDTO totalPedido(Long id, Pedido pedido) {
-//		
-//	}
+
 	
 }
