@@ -1,18 +1,11 @@
 package br.com.rocketStore.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.rocketStore.DTO.EnderecoResponseDTO;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,14 +17,24 @@ public class Cliente {
 	private Long Id;
 	@NotBlank(message = "Nome vazio ou nulo!")
 	private String nome;
-	private List<String> telefones = new ArrayList<>();
+	private String telefone1;
+	private String telefone2;
 	@Email(message = "email inválido!")
 	private String email;
 	@CPF(message = "CPF inválido!")
 	private String CPF;
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Endereco> enderecos = new ArrayList<>();
+	private String cep;
 	private String senha;
+
+	
+	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 
 	public Long getId() {
 		return Id;
@@ -49,20 +52,21 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public List<String> getTelefones() {
-		return telefones;
+
+	public String getTelefone1() {
+		return telefone1;
 	}
 
-	public void setTelefones(List<String> telefones) {
-		this.telefones = telefones;
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
 	}
 
-	public List<Endereco> getEnderecos() {
-		return enderecos;
+	public String getTelefone2() {
+		return telefone2;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
 	}
 
 	public String getEmail() {

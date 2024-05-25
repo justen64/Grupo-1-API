@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.rocketStore.DTO.EnderecoResponseDTO;
+import br.com.rocketStore.DTO.EnderecoDTO;
 import br.com.rocketStore.entity.Endereco;
 import br.com.rocketStore.exception.CepException;
 import br.com.rocketStore.repository.EnderecoRepository;
@@ -17,10 +17,10 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository repository;
 
-	public EnderecoResponseDTO buscar(String cep) {
+	public EnderecoDTO buscar(String cep) {
 		Optional<Endereco> endereco = Optional.ofNullable(repository.findByCep(cep));
 		if (endereco.isPresent()) {
-			return new EnderecoResponseDTO(endereco.get());
+			return new EnderecoDTO(endereco.get());
 		} else {
 			RestTemplate rs = new RestTemplate();
 			String url = "http://viacep.com.br/ws/" + cep + "/json";
@@ -35,7 +35,7 @@ public class EnderecoService {
 		}
 	}
 	
-	public EnderecoResponseDTO inserir (Endereco endereco) {
-		return new EnderecoResponseDTO(repository.save(endereco));
+	public EnderecoDTO inserir (Endereco endereco) {
+		return new EnderecoDTO(repository.save(endereco));
 	}
 }

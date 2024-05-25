@@ -1,37 +1,49 @@
 package br.com.rocketStore.DTO;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.rocketStore.entity.Cliente;
-import br.com.rocketStore.entity.Endereco;
 
 public class ClienteRequestDTO {
 	private String nome;
-	private List<String> telefones = new ArrayList<>();
+	private String telefone1;
+	private String telefone2;
 	private String email;
 	private String CPF;
-	private List<Endereco> enderecos = new ArrayList<>();
+	private String cep;
 	private String senha;
 	private String confirmaSenha;
-	
-	
+
 	public ClienteRequestDTO(Cliente cliente) {
 		nome = cliente.getNome();
-		telefones = cliente.getTelefones();
+		telefone1 = cliente.getTelefone1();
+		telefone1 = cliente.getTelefone2();
 		email = cliente.getEmail();
 		CPF = cliente.getCPF();
-		enderecos = cliente.getEnderecos();
+		cep = cliente.getCep();
 		senha = cliente.getSenha();
 	}
-	
-	
-	public List<String> getTelefones() {
-		return telefones;
+
+	public String getTelefone1() {
+		return telefone1;
 	}
 
-	public void setTelefones(List<String> telefones) {
-		this.telefones = telefones;
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getCPF() {
@@ -40,14 +52,6 @@ public class ClienteRequestDTO {
 
 	public void setCPF(String cPF) {
 		CPF = cPF;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
 	}
 
 	public String getNome() {

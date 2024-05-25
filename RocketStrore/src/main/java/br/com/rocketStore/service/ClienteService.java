@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.rocketStore.DTO.ClienteRequestDTO;
 import br.com.rocketStore.DTO.ClienteResponseDTO;
+import br.com.rocketStore.DTO.EnderecoDTO;
 import br.com.rocketStore.entity.Cliente;
 import br.com.rocketStore.exception.ConfirmaSenhaException;
 import br.com.rocketStore.exception.EmailException;
@@ -27,9 +28,12 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+    @Autowired
+    private EnderecoService enderecoService;
+	
 	public List<ClienteResponseDTO> listar() {
 		List<Cliente> clientes = repository.findAll();
-		return clientes.stream().map((c) -> new ClienteResponseDTO(c))
+		return clientes.stream().map((c) -> new ClienteResponseDTO(c,null))
 				.collect(Collectors.toList());
 	}
 	
@@ -46,12 +50,15 @@ public class ClienteService {
 		if (repository.findByEmail(cliente.getEmail()) != null) {
 			throw new EmailException("Email Já Existe na Base");
 		}
+		
+		EnderecoDTO e = EnderecoService.buscar
 		Cliente c = new Cliente();
 		c.setNome(c.getNome());
-		c.setTelefones(c.getTelefones());
+		c.setTelefone1(c.getTelefone1());;
+		c.setTelefone2(c.getTelefone2());;
 		c.setEmail(c.getEmail());
 		c.setCPF(c.getCPF());
-		c.setEnderecos(c.getEnderecos());
+		c.setCep(c.getCep());
 		c.setSenha(encoder.encode(cliente.getSenha()));
 		repository.save(c);
 		return new ClienteResponseDTO(c);

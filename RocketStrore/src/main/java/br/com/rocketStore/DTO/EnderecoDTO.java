@@ -2,7 +2,7 @@ package br.com.rocketStore.DTO;
 
 import br.com.rocketStore.entity.Endereco;
 
-public class EnderecoResponseDTO {
+public class EnderecoDTO {
 
 	private String cep;
 	private String logradouro;
@@ -11,7 +11,7 @@ public class EnderecoResponseDTO {
 	private String uf;
 	private Integer ibge;
 
-	public EnderecoResponseDTO(Endereco endereco) {
+	public EnderecoDTO(Endereco endereco) {
 		super();
 		cep = endereco.getCep();
 		logradouro = endereco.getLogradouro();
