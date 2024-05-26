@@ -24,13 +24,13 @@ import br.com.rocketStore.DTO.TypesDTO;
 import br.com.rocketStore.entity.Pokemon;
 import br.com.rocketStore.entity.Types;
 import br.com.rocketStore.exception.ResourceNotFoundException;
-import br.com.rocketStore.repository.PokemonRepositoy;
+import br.com.rocketStore.repository.PokemonRepository;
 
 @Service
 public class PokemonService {
 
 	@Autowired
-	private PokemonRepositoy repository;
+	private PokemonRepository repository;
 
 	public List<PokemonResponseDTO> inserir() throws Exception {
 		List<Pokemon> pokemons = new ArrayList<>();

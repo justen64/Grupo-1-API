@@ -1,7 +1,9 @@
 package br.com.rocketStore.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import br.com.rocketStore.DTO.Pedido_PokemonDTO;
 import br.com.rocketStore.pk.Pedido_PokemonPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -11,13 +13,28 @@ public class Pedido_Pokemon {
 
 	@EmbeddedId
 	private Pedido_PokemonPK id = new Pedido_PokemonPK();
-	private LocalDate dataCriacao;
+	private LocalDateTime dataCriacao;
 
-	public Pedido_Pokemon(Pedido pedido, Pokemon pokemon, LocalDate dataCriacao) {
+	private Integer quantidade;
+
+	
+	
+	public Pedido_Pokemon() {
+		super();
+	}
+
+	public Pedido_Pokemon(Pedido_PokemonDTO pd, Pedido pedido, Pokemon pokemon) {
 		super();
 		this.id.setPedido(pedido);
 		this.id.setPokemon(pokemon);
-		this.dataCriacao = dataCriacao;
+		this.dataCriacao = pokemon.getDataCadastro();
+		this.quantidade = pd.getQuantidade();
+	}
+
+	public Pedido_Pokemon(Pedido f, Pokemon pokemon, LocalDate now) {
+		this.id.setPedido(f);
+		this.id.setPokemon(pokemon);
+		this.dataCriacao = LocalDateTime.now();
 	}
 
 	public Pedido_PokemonPK getid() {
@@ -32,11 +49,20 @@ public class Pedido_Pokemon {
 		this.id = id;
 	}
 
-	public LocalDate getDataCriacao() {
+	
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDate dataCriacao) {
+	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
