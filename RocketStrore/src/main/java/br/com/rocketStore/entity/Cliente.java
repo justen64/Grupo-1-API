@@ -2,10 +2,13 @@ package br.com.rocketStore.entity;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -22,19 +25,12 @@ public class Cliente {
 	@Email(message = "email inválido!")
 	private String email;
 	@CPF(message = "CPF inválido!")
-	private String CPF;
-	private String cep;
+	private String cpf;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "cliente_id")
+	private Endereco endereco;
+	@NotBlank(message = "Senha vazia ou nula!")
 	private String senha;
-
-	
-	
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
 
 	public Long getId() {
 		return Id;
@@ -51,7 +47,6 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 
 	public String getTelefone1() {
 		return telefone1;
@@ -77,12 +72,20 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public String getCPF() {
-		return CPF;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public String getSenha() {

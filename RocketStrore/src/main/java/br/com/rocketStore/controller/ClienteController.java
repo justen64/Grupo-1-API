@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.rocketStore.DTO.ClienteRequestDTO;
 import br.com.rocketStore.DTO.ClienteResponseDTO;
 import br.com.rocketStore.entity.Cliente;
 import br.com.rocketStore.service.ClienteService;
@@ -29,21 +28,20 @@ public class ClienteController {
 	public List<ClienteResponseDTO> listar() {
 		return service.listar();
 	}
-	
+
 	@GetMapping("{page}")
-	public ClienteResponseDTO listarPorPagina (@PathVariable Pageable pageable) {
+	public ClienteResponseDTO listarPorPagina(@PathVariable Pageable pageable) {
 		return (ClienteResponseDTO) service.listarPorPagina(pageable);
 	}
 
 	@PostMapping
-	public ResponseEntity<ClienteResponseDTO> inserir(@RequestBody ClienteRequestDTO cliente) {
-		ClienteResponseDTO c = service.inserir(cliente);
-		return ResponseEntity.created(null).body(c);
+	public ResponseEntity<ClienteResponseDTO> inserir(@RequestBody Cliente cliente) {
+		return ResponseEntity.ok(service.inserir(cliente));
 	}
-	
+
 	@PutMapping("/{id}")
- public ResponseEntity<ClienteResponseDTO> alterarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-	    ClienteResponseDTO clienteAtualizado = service.alterarCliente(id, cliente);
-        return ResponseEntity.ok(clienteAtualizado);
+	public ResponseEntity<ClienteResponseDTO> alterarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
+		ClienteResponseDTO clienteAtualizado = service.alterarCliente(id, cliente);
+		return ResponseEntity.ok(clienteAtualizado);
 	}
 }

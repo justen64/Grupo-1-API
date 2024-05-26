@@ -6,18 +6,16 @@ public class ClienteResponseDTO {
 
 	private String nome;
 	private String email;
-	private String CPF;
+	private String cpf;
 	private String telefone1;
 	private String telefone2;
-	private EnderecoDTO endereco;
 
-	public ClienteResponseDTO(Cliente cliente, EnderecoDTO endereco) {
+	public ClienteResponseDTO(Cliente cliente) {
 		nome = cliente.getNome();
 		telefone1 = cliente.getTelefone1();
-		telefone2 = cliente.getTelefone2();	
+		telefone2 = cliente.getTelefone2();
 		email = cliente.getEmail();
-		CPF = cliente.getCPF();
-		this.endereco = endereco;
+		cpf = cliente.getCpf();
 	}
 
 	public ClienteResponseDTO() {
@@ -39,12 +37,12 @@ public class ClienteResponseDTO {
 		this.email = email;
 	}
 
-	public String getCPF() {
-		return CPF;
+	public String getcpf() {
+		return cpf;
 	}
 
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setcpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone1() {
@@ -62,15 +60,5 @@ public class ClienteResponseDTO {
 	public void setTelefone2(String telefone2) {
 		this.telefone2 = telefone2;
 	}
-
-	public EnderecoDTO getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(EnderecoDTO endereco) {
-		this.endereco = endereco;
-	}
-
-
 
 }

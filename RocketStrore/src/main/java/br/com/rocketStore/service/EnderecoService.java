@@ -1,10 +1,10 @@
 package br.com.rocketStore.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import br.com.rocketStore.DTO.EnderecoDTO;
 import br.com.rocketStore.entity.Endereco;
@@ -17,25 +17,21 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository repository;
 
-	public EnderecoDTO buscar(String cep) {
-		Optional<Endereco> endereco = Optional.ofNullable(repository.findByCep(cep));
-		if (endereco.isPresent()) {
-			return new EnderecoDTO(endereco.get());
+	public EnderecoDTO buscarPorCep(String cep) {
+		Optional<Endereco> verifica = Optional.ofNullable(repository.findByCep(cep));
+		if (verifica.isPresent()) {
+			return new EnderecoDTO(verifica.get());
 		} else {
-			RestTemplate rs = new RestTemplate();
-			String url = "http://viacep.com.br/ws/" + cep + "/json";
-			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(url, Endereco.class));
-			if (enderecoViaCep.get().getCep() != null) {
-				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
-				enderecoViaCep.get().setCep(cepSemTraco);
-				return inserir(enderecoViaCep.get());
-			} else {
-				throw new CepException("Cep Não Encontrado!");
-			}
+			throw new CepException("Nenhum endereço cadastrado nesse Cep foi encontrado!");
 		}
 	}
-	
-	public EnderecoDTO inserir (Endereco endereco) {
+
+	public EnderecoDTO inserir(Endereco endereco) {
 		return new EnderecoDTO(repository.save(endereco));
 	}
+
+	public List<Endereco> TodosEnderecos() {
+		return repository.findAll();
+	}
+
 }

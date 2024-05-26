@@ -10,6 +10,11 @@ public class EnderecoDTO {
 	private String localidade;
 	private String uf;
 	private Integer ibge;
+	private Integer numero;
+
+	public EnderecoDTO() {
+		super();
+	}
 
 	public EnderecoDTO(Endereco endereco) {
 		super();
@@ -19,6 +24,7 @@ public class EnderecoDTO {
 		localidade = endereco.getLocalidade();
 		uf = endereco.getUf();
 		ibge = endereco.getIbge();
+		numero = endereco.getNumero();
 	}
 
 	public String getCep() {
@@ -67,6 +73,14 @@ public class EnderecoDTO {
 
 	public void setIbge(Integer ibge) {
 		this.ibge = ibge;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
 }

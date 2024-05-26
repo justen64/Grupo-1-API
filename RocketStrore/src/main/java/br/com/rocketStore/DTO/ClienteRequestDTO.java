@@ -7,19 +7,24 @@ public class ClienteRequestDTO {
 	private String telefone1;
 	private String telefone2;
 	private String email;
-	private String CPF;
-	private String cep;
+	private String cpf;
 	private String senha;
-	private String confirmaSenha;
 
 	public ClienteRequestDTO(Cliente cliente) {
 		nome = cliente.getNome();
 		telefone1 = cliente.getTelefone1();
 		telefone1 = cliente.getTelefone2();
 		email = cliente.getEmail();
-		CPF = cliente.getCPF();
-		cep = cliente.getCep();
+		cpf = cliente.getCpf();
 		senha = cliente.getSenha();
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getTelefone1() {
@@ -38,30 +43,6 @@ public class ClienteRequestDTO {
 		this.telefone2 = telefone2;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getCPF() {
-		return CPF;
-	}
-
-	public void setCPF(String cPF) {
-		CPF = cPF;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -70,20 +51,20 @@ public class ClienteRequestDTO {
 		this.email = email;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public String getSenha() {
 		return senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getConfirmaSenha() {
-		return confirmaSenha;
-	}
-
-	public void setConfirmaSenha(String confirmaSenha) {
-		this.confirmaSenha = confirmaSenha;
 	}
 
 }

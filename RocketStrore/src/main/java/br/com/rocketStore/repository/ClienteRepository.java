@@ -6,5 +6,6 @@ import br.com.rocketStore.entity.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	Cliente findByEmail(String email);
+
 	Cliente findByNome(String nome);
 }
