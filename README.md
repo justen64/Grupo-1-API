@@ -4,5 +4,5 @@
 * Bruno Cariello
 * Kamille da Cruz
 * Marcos Mattos
-* Rodrigo Justen
+* Rodrigo Justen - Trabalho individual: integração da API externa "PokeAPI"
 * Samuel Romeu 
