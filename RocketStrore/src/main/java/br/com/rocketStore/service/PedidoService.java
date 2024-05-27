@@ -17,6 +17,7 @@ import br.com.rocketStore.entity.Pedido;
 import br.com.rocketStore.entity.Pedido_Pokemon;
 import br.com.rocketStore.entity.Pokemon;
 import br.com.rocketStore.enuns.StatusENUM;
+import br.com.rocketStore.exception.ClienteException;
 import br.com.rocketStore.exception.ResourceNotFoundException;
 import br.com.rocketStore.repository.PedidoRepository;
 import jakarta.transaction.Transactional;
@@ -26,51 +27,51 @@ public class PedidoService {
 
 	@Autowired
 	private PedidoRepository repository;
-	
+
 	@Autowired
 	private PokemonService pokemonService;
-	
+
 	public List<PedidoResponseDTO> listar() {
 		List<Pedido> pedidos = repository.findAll();
-		return pedidos.stream().map((c) -> new PedidoResponseDTO(c))
-				.collect(Collectors.toList());
+		return pedidos.stream().map((c) -> new PedidoResponseDTO(c)).collect(Collectors.toList());
 	}
-	
+
 	public Page<Pedido> listarPorPagina(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
 	@Transactional
 	public PedidoResponseDTO inserir(PedidoRequestDTO pedido) {
-		
-		
-		
+
 		Pedido f = new Pedido();
-		
-		f.setCliente(pedido.getCliente());
-		f.setDataPedido(pedido.getDataPedido());
-		f.setStatus(pedido.getStatus());
-		repository.save(f);
-		
-		Set<Pedido_Pokemon> pokemons = new HashSet<>();
-		
-		for (Pokemon pokemon : pedido.getPokemon()) {
-			pokemon = pokemonService.buscar(pokemon.getId());
-			pokemons.add(new Pedido_Pokemon(f, pokemon, LocalDate.now()));
+		if (pedido.getCliente() != null) {
+			f.setCliente(pedido.getCliente());
+			f.setDataPedido(pedido.getDataPedido());
+			f.setStatus(pedido.getStatus());
+			repository.save(f);
+
+			Set<Pedido_Pokemon> pokemons = new HashSet<>();
+
+			for (Pokemon pokemon : pedido.getPokemon()) {
+				pokemon = pokemonService.buscar(pokemon.getId());
+				pokemons.add(new Pedido_Pokemon(f, pokemon, LocalDate.now()));
+			}
+			f.setProdutos(pokemons);
+			repository.save(f);
+			PedidoResponseDTO response = new PedidoResponseDTO(f);
+			return response;
+		} else {
+			throw new ClienteException("Cliente apresentado não encontrado!");
 		}
-		f.setProdutos(pokemons);
-		repository.save(f);
-		PedidoResponseDTO response = new PedidoResponseDTO(f);
-		return response;
 	}
-	
-	
-	public PedidoResponseDTO alterarStatus(Long id, StatusENUM status){
-		
-	Pedido c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
-	c.setId(id);
-	c.setStatus(status);
-	repository.save(c);
-	return new PedidoResponseDTO(c);
+
+	public PedidoResponseDTO alterarStatus(Long id, StatusENUM status) {
+
+		Pedido c = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Lancamento não encontrado"));
+		c.setId(id);
+		c.setStatus(status);
+		repository.save(c);
+		return new PedidoResponseDTO(c);
 	}
 }
