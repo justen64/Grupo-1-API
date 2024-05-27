@@ -96,4 +96,11 @@ public class Cliente {
 		this.senha = senha;
 	}
 
+	@Override
+	public String toString() {
+		return "Cliente, nome=" + nome  + ", email=" + email + ", cpf=" + cpf + ", endereco=" + endereco +"/n/n/n";
+	}
+
+	
+	
 }
