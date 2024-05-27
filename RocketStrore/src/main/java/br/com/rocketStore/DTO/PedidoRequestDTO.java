@@ -16,12 +16,18 @@ public class PedidoRequestDTO {
 	private Cliente cliente;
 
 	private Set<Pokemon> pokemon = new HashSet<>();
+	
+	public PedidoRequestDTO() {
+		super();
+	}
 
-	public PedidoRequestDTO(Pedido pedido) {
+	public PedidoRequestDTO(Pedido pedido, Set<Pokemon> pokemon) {
 		this.dataPedido = pedido.getDataPedido();
 		this.status = pedido.getStatus();
 		this.cliente = pedido.getCliente();
+		this.pokemon = pokemon;
 	}
+
 
 	public LocalDate getDataPedido() {
 		return dataPedido;

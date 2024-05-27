@@ -45,9 +45,9 @@ public class PedidoService {
 		
 		Pedido f = new Pedido();
 		
-		f.setCliente(f.getCliente());
-		f.setDataPedido(f.getDataPedido());
-		f.setStatus(f.getStatus());
+		f.setCliente(pedido.getCliente());
+		f.setDataPedido(pedido.getDataPedido());
+		f.setStatus(pedido.getStatus());
 		repository.save(f);
 		
 		Set<Pedido_Pokemon> pokemons = new HashSet<>();
@@ -58,7 +58,8 @@ public class PedidoService {
 		}
 		f.setProdutos(pokemons);
 		repository.save(f);
-		return new PedidoResponseDTO(f);
+		PedidoResponseDTO response = new PedidoResponseDTO(f);
+		return response;
 	}
 	
 	

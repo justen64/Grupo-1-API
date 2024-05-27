@@ -61,10 +61,10 @@ public class ClienteService {
 	}
 
 	public ClienteResponseDTO alterarCliente(Long id, Cliente cliente) {
-		Cliente c = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Lançamento não encontrado"));
-		c.setId(id);
-		repository.save(c);
-		return new ClienteResponseDTO(c);
+		repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Lançamento não encontrado"));
+		cliente.setId(id);
+		repository.save(cliente);
+		ClienteResponseDTO response = new ClienteResponseDTO(cliente); 
+		return response;
 	}
 }

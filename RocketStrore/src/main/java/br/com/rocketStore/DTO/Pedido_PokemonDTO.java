@@ -4,9 +4,7 @@ public class Pedido_PokemonDTO {
 	
 	private Long idPedido;
     private Long idProduto;
-    private Integer quantidade;
-
-    
+    private Integer quantidade;    
     
     public Long getIdPedido() {
         return idPedido;
