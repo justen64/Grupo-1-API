@@ -42,12 +42,6 @@ public class PedidoController {
 		return ResponseEntity.created(null).body(p);
 	}
 	
-	@PutMapping("/{id}")
- public ResponseEntity<PedidoResponseDTO> alterarPedido(@PathVariable Long id, @RequestBody Pedido pedido) {
-	    PedidoResponseDTO pedidoAtualizado = service.alterarPedido(id, pedido);
-        return ResponseEntity.ok(pedidoAtualizado);
-	}
-	
 	@PutMapping("/status/{id}")
  public ResponseEntity<PedidoResponseDTO> alterarStatus(@PathVariable Long id, @RequestBody StatusENUM status) {
 	    PedidoResponseDTO StatusAtualizado = service.alterarStatus(id, status);
