@@ -48,7 +48,7 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoAtualizado);
 	}
 	
-	@PutMapping("/{status}")
+	@PutMapping("/status/{id}")
  public ResponseEntity<PedidoResponseDTO> alterarStatus(@PathVariable Long id, @RequestBody StatusENUM status) {
 	    PedidoResponseDTO StatusAtualizado = service.alterarStatus(id, status);
         return ResponseEntity.ok(StatusAtualizado);

@@ -69,17 +69,9 @@ public class PedidoService {
 		
 	Pedido c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
 	c.setId(id);
+	c.setStatus(status);
+	repository.save(c);
 	return new PedidoResponseDTO(c);
-	
 	}
-	
-	public PedidoResponseDTO alterarPedido(Long id, Pedido pedido){
-		Pedido c = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lancamento não encontrado"));
-        c.setId(id);
-		repository.save(c);
-        return new PedidoResponseDTO(c);
-    }
-	
-
 	
 }

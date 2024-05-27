@@ -86,6 +86,10 @@ public class ClienteService {
 	public ClienteResponseDTO alterarCliente(Long id, Cliente cliente) {
 		repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Lançamento não encontrado"));
 		cliente.setId(id);
+		cliente.setCpf(cliente.getCpf());
+		cliente.setEmail(cliente.getEmail());
+		cliente.setNome(cliente.getNome());
+		cliente.setSenha(cliente.getSenha());
 		repository.save(cliente);
 		ClienteResponseDTO response = new ClienteResponseDTO(cliente); 
 		return response;
