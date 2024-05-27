@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Pedido {
@@ -30,6 +31,7 @@ public class Pedido {
 	
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente")
+	@NotNull
 	private Cliente cliente;
 	
 	

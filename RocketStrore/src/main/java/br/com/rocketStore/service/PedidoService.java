@@ -43,6 +43,8 @@ public class PedidoService {
 	@Transactional
 	public PedidoResponseDTO inserir(PedidoRequestDTO pedido) {
 		
+		
+		
 		Pedido f = new Pedido();
 		
 		f.setCliente(pedido.getCliente());

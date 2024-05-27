@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.rocketStore.DTO.ClienteRequestDTO;
 import br.com.rocketStore.DTO.ClienteResponseDTO;
 import br.com.rocketStore.entity.Cliente;
 import br.com.rocketStore.service.ClienteService;
@@ -35,7 +36,7 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ClienteResponseDTO> inserir(@RequestBody Cliente cliente) {
+	public ResponseEntity<ClienteResponseDTO> inserir(@RequestBody ClienteRequestDTO cliente) {
 		return ResponseEntity.ok(service.inserir(cliente));
 	}
 

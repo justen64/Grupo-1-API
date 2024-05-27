@@ -11,10 +11,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.rocketStore.DTO.ClienteRequestDTO;
 import br.com.rocketStore.DTO.ClienteResponseDTO;
+import br.com.rocketStore.configuration.MailConfig;
 import br.com.rocketStore.entity.Cliente;
 import br.com.rocketStore.entity.Endereco;
 import br.com.rocketStore.exception.CepException;
+import br.com.rocketStore.exception.ConfirmaSenhaException;
+import br.com.rocketStore.exception.EmailException;
 import br.com.rocketStore.exception.ResourceNotFoundException;
 import br.com.rocketStore.repository.ClienteRepository;
 import jakarta.transaction.Transactional;
@@ -28,8 +32,25 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
+	@Autowired
+	private MailConfig mailConfig;
+	
 	@Transactional
-	public ClienteResponseDTO inserir(Cliente cliente) {
+	public ClienteResponseDTO inserir(ClienteRequestDTO cliente) {
+		if (!cliente.getSenha().equals(cliente.getConfirmaSenha())) {
+			throw new ConfirmaSenhaException("As senhas não são iguais!");
+		}
+
+		if (repository.findByEmail(cliente.getEmail()) != null) {
+			throw new EmailException("Email Já Cadastrado!");
+		}
+		Cliente c = new Cliente();
+		c.setNome(cliente.getNome());
+		c.setTelefone1(cliente.getTelefone1());
+		c.setTelefone2(cliente.getTelefone2());
+		c.setEmail(cliente.getEmail());
+		c.setCpf(cliente.getCpf());
+		c.setSenha(encoder.encode(cliente.getSenha()));
 		Endereco endereco = cliente.getEndereco();
 		if (endereco != null) {
 			RestTemplate rs = new RestTemplate();
@@ -40,15 +61,17 @@ public class ClienteService {
 				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
 				enderecoViaCep.get().setCep(cepSemTraco);
 				enderecoViaCep.get().setNumero(endereco.getNumero());
-				cliente.setEndereco(enderecoViaCep.get());
+				c.setEndereco(enderecoViaCep.get());
 			} else {
 				throw new CepException("Cep Não Encontrado!");
 			}
 		} else {
 			throw new CepException("Por favor, insira um endereço!");
 		}
-		repository.save(cliente);
-		return new ClienteResponseDTO(cliente);
+		repository.save(c);
+		mailConfig.sendMail(cliente.getEmail(), "Cadastro de Usuário no Sistema", cliente.toString());
+		ClienteResponseDTO response = new ClienteResponseDTO(c); 
+		return response;
 	}
 
 	public List<ClienteResponseDTO> listar() {

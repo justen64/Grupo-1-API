@@ -1,6 +1,7 @@
 package br.com.rocketStore.DTO;
 
 import br.com.rocketStore.entity.Cliente;
+import br.com.rocketStore.entity.Endereco;
 
 public class ClienteRequestDTO {
 	private String nome;
@@ -9,6 +10,12 @@ public class ClienteRequestDTO {
 	private String email;
 	private String cpf;
 	private String senha;
+	private String confirmaSenha;
+	private Endereco endereco;
+	
+	public ClienteRequestDTO() {
+		super();
+	}
 
 	public ClienteRequestDTO(Cliente cliente) {
 		nome = cliente.getNome();
@@ -65,6 +72,22 @@ public class ClienteRequestDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 }
