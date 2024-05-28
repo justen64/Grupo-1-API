@@ -2,15 +2,15 @@ package br.com.rocketStore.DTO;
 
 import java.util.List;
 
-import br.com.rocketStore.entity.Types;
+import br.com.rocketStore.entity.Sprites;
 
 public class PokemonDTO {
 
 private String name;
 	
 	private Long id;
-	
 	private List<TypesDTO> types;
+	private Sprites sprites;
 
 	public String getName() {
 		return name;
@@ -36,8 +36,12 @@ private String name;
 		this.types = types;
 	}
 
-	
-	
-	
+	public Sprites getSprites() {
+		return sprites;
+	}
+
+	public void setSprites(Sprites sprites) {
+		this.sprites = sprites;
+	}
 	
 }

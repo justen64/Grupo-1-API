@@ -27,7 +27,6 @@ public class Pedido_Pokemon {
 		super();
 		this.id.setPedido(pedido);
 		this.id.setPokemon(pokemon);
-		this.dataCriacao = pokemon.getDataCadastro();
 		this.quantidade = pd.getQuantidade();
 	}
 

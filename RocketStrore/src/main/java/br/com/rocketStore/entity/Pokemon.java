@@ -1,9 +1,5 @@
 package br.com.rocketStore.entity;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -26,7 +22,8 @@ public class Pokemon {
 	@Embedded
 	private Types types;
 	
-	private LocalDateTime dataCadastro;
+	@Embedded
+	private Sprites sprites;;
 
 	private Double valorUnitario;
 	
@@ -36,11 +33,12 @@ public class Pokemon {
 		super();
 	}
 
-	public Pokemon( String nome, Long ordem, Types types) {
+	public Pokemon( String nome, Long ordem, Types types, Sprites sprites) {
 		super();
 		this.nome = nome;
 		this.ordem = ordem;
 		this.types = types;
+		this.sprites = sprites;
 		
 		
 	}
@@ -79,14 +77,6 @@ public class Pokemon {
 		this.types = types;
 	}
 	
-	public LocalDateTime getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
 	public Double getValorUnitario() {
 		return valorUnitario;
 	}
@@ -94,5 +84,13 @@ public class Pokemon {
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}	
+	
+	public Sprites getSprites() {
+		return sprites;
+	}
+
+	public void setSprites(Sprites sprites) {
+		this.sprites = sprites;
+	}
 	
 }

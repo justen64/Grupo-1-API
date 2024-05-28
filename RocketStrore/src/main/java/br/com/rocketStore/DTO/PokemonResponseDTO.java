@@ -1,8 +1,7 @@
 package br.com.rocketStore.DTO;
 
-import java.time.LocalDateTime;
-
 import br.com.rocketStore.entity.Pokemon;
+import br.com.rocketStore.entity.Sprites;
 
 public class PokemonResponseDTO {
 
@@ -15,6 +14,8 @@ public class PokemonResponseDTO {
 	private String tipoSecundario;
 
 	private Double valorUnitario;
+	
+	private Sprites sprites;
 
 	public PokemonResponseDTO() {
 		super();
@@ -27,6 +28,15 @@ public class PokemonResponseDTO {
 		this.tipoPrimario = pokemon.getTypes().getName1();
 		this.tipoSecundario = pokemon.getTypes().getName2();
 		this.valorUnitario = pokemon.getValorUnitario();
+		this.sprites = pokemon.getSprites();
+	}
+
+	public Sprites getSprites() {
+		return sprites;
+	}
+
+	public void setSprites(Sprites sprites) {
+		this.sprites = sprites;
 	}
 
 	public String getName() {
