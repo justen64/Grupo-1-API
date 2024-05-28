@@ -10,11 +10,13 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
@@ -23,6 +25,7 @@ import br.com.rocketStore.DTO.PokemonResponseDTO;
 import br.com.rocketStore.DTO.TypesDTO;
 import br.com.rocketStore.entity.Pokemon;
 import br.com.rocketStore.entity.Types;
+import br.com.rocketStore.exception.PokemonException;
 import br.com.rocketStore.exception.ResourceNotFoundException;
 import br.com.rocketStore.repository.PokemonRepository;
 
@@ -34,13 +37,12 @@ public class PokemonService {
 
 	public List<PokemonResponseDTO> inserir() throws Exception {
 		List<Pokemon> pokemons = new ArrayList<>();
-		
-		for (int i = 1; i <= 1025; i++) {
+
+		for (int i = 1; i <= 151; i++) {
 			Random random = new Random();
-	        Double numero = random.nextDouble(5000)+1;
-	        NumberFormat formatter = new DecimalFormat("#0.00");
-	        
-	        
+			Double numero = random.nextDouble(5000) + 1;
+			NumberFormat formatter = new DecimalFormat("#0.00");
+
 			URL url = new URL("https://pokeapi.co/api/v2/pokemon-form/" + i + "/");
 			URLConnection connection = url.openConnection();
 			InputStream is = connection.getInputStream();
@@ -66,6 +68,10 @@ public class PokemonService {
 				String formattedNumber = formatter.format(numero);
 				formattedNumber = formattedNumber.replace(",", ".");
 				Double num = Double.parseDouble(formattedNumber);
+				RestTemplate rs = new RestTemplate();
+				String urlCurioso = "http://numbersapi.com/" + i;
+				String curiosidade = rs.getForObject(urlCurioso, String.class);
+				save.setCuriosidade(curiosidade);
 				save.setValorUnitario(num);
 				save.setDataCadastro(LocalDateTime.now());
 				repository.save(save);
@@ -78,6 +84,10 @@ public class PokemonService {
 				String formattedNumber = formatter.format(numero);
 				formattedNumber = formattedNumber.replace(",", ".");
 				Double num = Double.parseDouble(formattedNumber);
+				RestTemplate rs = new RestTemplate();
+				String urlCurioso = "http://numbersapi.com/" + i;
+				String curiosidade = rs.getForObject(urlCurioso, String.class);
+				save.setCuriosidade(curiosidade);
 				save.setValorUnitario(num);
 				save.setDataCadastro(LocalDateTime.now());
 				repository.save(save);
@@ -90,13 +100,65 @@ public class PokemonService {
 	public List<PokemonResponseDTO> listarPokemon() {
 		List<Pokemon> pokemon = repository.findAll();
 		return pokemon.stream().map((pok) -> new PokemonResponseDTO(pok)).collect(Collectors.toList());
-               
+
 	}
-	
-	
+
 	public Pokemon buscar(Long id) {
 		Pokemon pokemon = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Pokemon não encontrado!"));
 		return pokemon;
 	}
+
+	public List<String> listarCuriosidades() {
+		List<String> curiosidades = repository.findAllCuriosidades();
+		return curiosidades;
+	}
+
+	public PokemonResponseDTO atualizarCuriosidade(Long Id, String curiosidade) {
+		Optional<Pokemon> cr = repository.findById(Id);
+		if (cr.isPresent()) {
+			cr.get().setCuriosidade(curiosidade);
+			return new PokemonResponseDTO(repository.save(cr.get()));
+		} else {
+			throw new PokemonException("Pokemon não encontrado");
+		}
+	}
+	
+	public PokemonResponseDTO deleteCuriosidade(Long Id) {
+		Optional<Pokemon> cr = repository.findById(Id);
+		if (cr.isPresent()) {
+			cr.get().setCuriosidade(null);
+			return new PokemonResponseDTO(repository.save(cr.get()));
+		} else {
+			throw new PokemonException("Pokemon não encontrado");
+		}
+	}
+	
+	public PokemonResponseDTO AdicionarCuriosidade(Long Id, String string) {
+		Optional<Pokemon> cr = repository.findById(Id);
+		if (cr.isPresent()) {
+			if (cr.get().getCuriosidade() == null) {
+			cr.get().setCuriosidade(string);
+			return new PokemonResponseDTO(repository.save(cr.get()));
+			} else {
+				throw new PokemonException("O número do pokemon indicado já possui uma curiosidade");
+			}
+		} else {
+			throw new PokemonException("Pokemon não encontrado");
+		}
+	}
+	
+	public PokemonResponseDTO resetarCuriosidade(Long Id) {
+		Optional<Pokemon> cr = repository.findById(Id);
+		if (cr.isPresent()) {
+			RestTemplate rs = new RestTemplate();
+			String urlCurioso = "http://numbersapi.com/" + Id;
+			String curiosidade = rs.getForObject(urlCurioso, String.class);
+			cr.get().setCuriosidade(curiosidade);
+			return new PokemonResponseDTO(repository.save(cr.get()));
+		} else {
+			throw new PokemonException("Pokemon não encontrado");
+		}
+	}
+
 }

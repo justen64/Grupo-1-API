@@ -15,6 +15,8 @@ public class PokemonResponseDTO {
 	private String tipoSecundario;
 
 	private Double valorUnitario;
+	
+	private String curiosidade;
 
 	public PokemonResponseDTO() {
 		super();
@@ -27,6 +29,7 @@ public class PokemonResponseDTO {
 		this.tipoPrimario = pokemon.getTypes().getName1();
 		this.tipoSecundario = pokemon.getTypes().getName2();
 		this.valorUnitario = pokemon.getValorUnitario();
+		this.curiosidade = pokemon.getCuriosidade();
 	}
 
 	public String getName() {
@@ -67,6 +70,14 @@ public class PokemonResponseDTO {
 
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public String getCuriosidade() {
+		return curiosidade;
+	}
+
+	public void setCuriosidade(String curiosidade) {
+		this.curiosidade = curiosidade;
 	}
 
 }

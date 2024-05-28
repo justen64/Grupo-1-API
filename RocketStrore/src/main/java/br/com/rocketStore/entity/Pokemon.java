@@ -2,8 +2,6 @@ package br.com.rocketStore.entity;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -30,6 +28,7 @@ public class Pokemon {
 
 	private Double valorUnitario;
 	
+	private String curiosidade;
 	
 
 	public Pokemon() {
@@ -93,6 +92,15 @@ public class Pokemon {
 
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
+	}
+
+	public String getCuriosidade() {
+		return curiosidade;
+	}
+
+	public void setCuriosidade(String curiosidade) {
+		this.curiosidade = curiosidade;
 	}	
+	
 	
 }
